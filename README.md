@@ -11,6 +11,10 @@ relevant from MeV to PeV energy scales. The Generator includes several tools (fl
 navigation drivers, specialized event generation apps, event reweighting engines) to simulate complex experimental 
 setups in full detail and to support generator-related analysis tasks. 
 
+This version is a fork of the main GENIE code to include induced nucleon decay.  The code should be eventually be
+merged into the main GENIE development branch.  Please ensure you use the branch jberger_ind for induced nucleon
+decay event generation.
+
 For more information, visit http://www.genie-mc.org
 
 <pre>
