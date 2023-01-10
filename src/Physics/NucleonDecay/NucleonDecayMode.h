@@ -11,7 +11,7 @@
 \created  November 10, 2011
 
 \cpright  Copyright (c) 2003-2022, The GENIE Collaboration
-          For the full text of the license visit http://copyright.genie-mc.org           
+          For the full text of the license visit http://copyright.genie-mc.org
 */
 //____________________________________________________________________________
 
@@ -90,7 +90,14 @@ namespace genie {
    kNDp2mupnubarnu,     // m = 57: p --> \mu^{+} + \bar{\nu}} + \nu
    kNDp2emmupmup,       // m = 58: p --> e^{-} + \mu^{+} + \mu^{+}
    kNDn2threenus,       // m = 59: n --> \bar{\nu}} + \bar{\nu}} + \nu
-   kNDn2fivenus         // m = 60: n --> \bar{\nu}} + \bar{\nu}} + \bar{\nu}} + \nu + \nu
+   kNDn2fivenus,        // m = 60: n --> \bar{\nu}} + \bar{\nu}} + \bar{\nu}} + \nu + \nu
+   // IND
+   kINDp2pip = 61,       // m = 61: phi + p --> chi + pi+
+   kINDn2pi0,            // m = 62: phi + n --> chi + pi0
+   kINDp2Kp,             // m = 63: phi + p --> chi + K+
+   kINDn2K0S,            // m = 64: phi + n --> chi + K0S
+   kINDn2K0L,            // m = 65: phi + n --> chi + K0L
+   kINDn2D0              // m = 66: phi + n --> chi + D0
 
  } NucleonDecayMode_t;
 

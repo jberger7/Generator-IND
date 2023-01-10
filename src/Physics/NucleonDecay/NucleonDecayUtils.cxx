@@ -322,7 +322,32 @@ string genie::utils::nucleon_decay::AsString(NucleonDecayMode_t ndm,
     return "n --> nubar nubar nubar nu nu";
     break;
 
+  case (kINDp2pip):
+    return "phi + p --> chi + pi+";
+    break;
+
+  case (kINDn2pi0):
+    return "phi + n --> chi + pi0";
+    break;
+
+  case (kINDp2Kp):
+    return "phi + p --> chi + K+";
+    break;
+
+  case (kINDn2K0S):
+    return "phi + n --> chi + K0S";
+    break;
+
+	case (kINDn2K0L):
+	  return "phi + n --> chi + K0L";
+	  break;
+
+  case (kINDn2D0):
+    return "phi + n --> chi + D0";
+    break;
+
   }
+
   return "Invalid nucleon decay mode!";
 }
 //____________________________________________________________________________
@@ -375,6 +400,8 @@ bool genie::utils::nucleon_decay::IsValidMode(NucleonDecayMode_t ndm,
   case (kNDp2mupmupmum):
   case (kNDp2mupnubarnu):
   case (kNDp2emmupmup):
+  case (kINDp2pip):
+  case (kINDp2Kp):
 
     if (npdg == kPdgProton || npdg == 0) {
       return true;
@@ -404,6 +431,10 @@ bool genie::utils::nucleon_decay::IsValidMode(NucleonDecayMode_t ndm,
   case (kNDn2mupmumnubar):
   case (kNDn2threenus):
   case (kNDn2fivenus):
+  case (kINDn2pi0):
+  case (kINDn2K0S):
+	case (kINDn2K0L):
+  case (kINDn2D0):
 
     if (npdg == kPdgNeutron || npdg == 0) {
       return true;
@@ -411,6 +442,8 @@ bool genie::utils::nucleon_decay::IsValidMode(NucleonDecayMode_t ndm,
       return false;
     }
   break;
+
+
 
   default :
     return false;
@@ -472,6 +505,12 @@ int genie::utils::nucleon_decay::DecayedNucleonPdgCode(NucleonDecayMode_t ndm)
   case (kNDp2emmupmup)        : return kPdgProton;  break;
   case (kNDn2threenus)        : return kPdgNeutron; break;
   case (kNDn2fivenus)         : return kPdgNeutron; break;
+  case (kINDp2pip)            : return kPdgProton; break;
+  case (kINDn2pi0)            : return kPdgNeutron; break;
+  case (kINDp2Kp)             : return kPdgProton; break;
+  case (kINDn2K0S)            : return kPdgNeutron; break;
+	case (kINDn2K0L)            : return kPdgNeutron; break;
+  case (kINDn2D0)             : return kPdgNeutron; break;
 
   default               : return 0;           break;
   }
@@ -854,6 +893,30 @@ PDGCodeList genie::utils::nucleon_decay::DecayProductList(NucleonDecayMode_t ndm
     decay_products.push_back(kPdgAntiNuE);
     decay_products.push_back(kPdgNuE);
     decay_products.push_back(kPdgNuE);
+    break;
+
+  case (kINDp2pip):
+    decay_products.push_back(kPdgPiP);
+    break;
+
+  case (kINDn2pi0):
+    decay_products.push_back(kPdgPi0);
+    break;
+
+  case (kINDp2Kp):
+    decay_products.push_back(kPdgKP);
+    break;
+
+	case (kINDn2K0S):
+    decay_products.push_back(kPdgK0S);
+    break;
+
+  case (kINDn2K0L):
+    decay_products.push_back(kPdgK0L);
+    break;
+
+  case (kINDn2D0):
+    decay_products.push_back(kPdgAntiD0);
     break;
 
   default :

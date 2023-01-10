@@ -11,6 +11,8 @@
                      [-r run#] 
                       -n n_of_events
                       -m decay_mode
+		     [-p phi_mass]
+		     [-x chi_mass]
 		     [-N decayed_nucleon_pdg]
 	              -g geometry
                      [-L geometry_length_units] 
@@ -171,6 +173,8 @@ string             gOptRootGeomTopVol = "";                // input geometry top
 double             gOptGeomLUnits = 0;                     // input geometry length units 
 double             gOptGeomDUnits = 0;                     // input geometry density units 
 long int           gOptRanSeed = -1;                       // random number seed
+//double             gOptPhiMass = 0;                        // phi mass
+//double             gOptChiMass = 0;                        // chi mass
 
 //_________________________________________________________________________________________
 int main(int argc, char ** argv)
@@ -364,6 +368,22 @@ void GetCommandLineArgs(int argc, char ** argv)
   } //-m
   gOptDecayMode = (NucleonDecayMode_t) mode;
 
+  /*
+  // phi mass
+  if( parser.OptionExists('p') ) {
+    LOG("gevgen_ndcy", pDEBUG) 
+        << "Reading phi mass";
+    gOptPhiMass = parser.ArgAsDouble('p');
+  } 
+
+  // chi mass
+  if( parser.OptionExists('x') ) {
+    LOG("gevgen_ndcy", pDEBUG) 
+        << "Reading chi mass";
+    gOptChiMass = parser.ArgAsDouble('x');
+  } 
+  */
+  
   // decayed nucleon PDG
   if( parser.OptionExists('N') ) {
     LOG("gevgen_ndcy", pINFO) << "Reading decayed nucleon PDG";

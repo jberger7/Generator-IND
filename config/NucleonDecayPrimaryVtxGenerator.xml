@@ -2,9 +2,10 @@
 
 <alg_conf>
 
-  <param_set name="Default"> 
-     <param type="alg" name="NuclearModel"> genie::NuclearModelMap/Default </param>
+  <param_set name="Default">
+    <param type="alg" name="NuclearModel"> genie::NuclearModelMap/Default </param>
+    <param type="double" name="phi-mass"> 0.55 </param>
+    <param type="double" name="chi-mass"> 0.95 </param>
   </param_set>
 
 </alg_conf>
-

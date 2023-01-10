@@ -8,6 +8,7 @@
 */
 //____________________________________________________________________________
 
+#include "Framework/Algorithm/AlgConfigPool.h"
 #include "Framework/Algorithm/AlgFactory.h"
 #include "Framework/Conventions/Controls.h"
 #include "Framework/Conventions/Constants.h"
@@ -272,6 +273,9 @@ void NucleonDecayPrimaryVtxGenerator::GenerateDecayProducts(
   LOG("NucleonDecay", pINFO) << "Generating decay...";
 
   PDGCodeList pdgv = utils::nucleon_decay::DecayProductList(fCurrDecayMode, fCurrDecayedNucleon);
+  if (fCurrDecayMode > 60) {
+    pdgv.push_back(0);
+  }
   LOG("NucleonDecay", pINFO) << "Decay product IDs: " << pdgv;
   assert ( pdgv.size() >  1);
 
@@ -285,7 +289,10 @@ void NucleonDecayPrimaryVtxGenerator::GenerateDecayProducts(
   double   sum  = 0;
   for(pdg_iter = pdgv.begin(); pdg_iter != pdgv.end(); ++pdg_iter) {
     int pdgc = *pdg_iter;
-    double m = PDGLibrary::Instance()->Find(pdgc)->Mass();
+    double m = fChiMass;
+    if (pdgc != 0)
+      m = PDGLibrary::Instance()->Find(pdgc)->Mass();
+    LOG("NucleonDecay", pNOTICE) << "Adding mass for " << pdgc << " is " << m;    
     mass[i++] = m;
     sum += m;
   }
@@ -297,6 +304,10 @@ void NucleonDecayPrimaryVtxGenerator::GenerateDecayProducts(
   GHepParticle * decayed_nucleon = event->Particle(decayed_nucleon_id);
   assert(decayed_nucleon);
   TLorentzVector * p4d = decayed_nucleon->GetP4();
+  if (fCurrDecayMode > 60) {
+    p4d = new TLorentzVector(p4d->Px(), p4d->Py(), p4d->Pz(), p4d->E() + fPhiMass);
+    
+  }
   TLorentzVector * v4d = decayed_nucleon->GetX4();
 
   LOG("NucleonDecay", pINFO)
@@ -377,9 +388,12 @@ void NucleonDecayPrimaryVtxGenerator::GenerateDecayProducts(
   for(pdg_iter = pdgv.begin(); pdg_iter != pdgv.end(); ++pdg_iter) {
      int pdgc = *pdg_iter;
      TLorentzVector * p4fin = fPhaseSpaceGenerator.GetDecay(idp);
-     GHepStatus_t ist =
-        utils::nucleon_decay::DecayProductStatus(fNucleonIsBound, pdgc);
-     event->AddParticle(pdgc, ist, decayed_nucleon_id,-1,-1,-1, *p4fin, v4);
+     if (pdgc != 0) {
+       LOG("NucleonDecay", pNOTICE) << "Adding a particle with " << pdgc;
+       GHepStatus_t ist =
+	 utils::nucleon_decay::DecayProductStatus(fNucleonIsBound, pdgc);
+       event->AddParticle(pdgc, ist, decayed_nucleon_id,-1,-1,-1, *p4fin, v4);
+     }
      idp++;
   }
 
@@ -387,6 +401,7 @@ void NucleonDecayPrimaryVtxGenerator::GenerateDecayProducts(
   delete [] mass;
   delete p4d;
   delete v4d;
+
 }
 //____________________________________________________________________________
 void NucleonDecayPrimaryVtxGenerator::Configure(const Registry & config)
@@ -411,5 +426,9 @@ void NucleonDecayPrimaryVtxGenerator::LoadConfig(void)
   RgKey nuclkey = "NuclearModel";
   fNuclModel = dynamic_cast<const NuclearModelI *> (this->SubAlg(nuclkey));
   assert(fNuclModel);
+
+  GetParam("phi-mass", fPhiMass );
+  GetParam("chi-mass", fChiMass );
+
 }
 //___________________________________________________________________________

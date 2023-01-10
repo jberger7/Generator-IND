@@ -56,6 +56,9 @@ private:
    mutable bool               fNucleonIsBound;
    mutable TGenPhaseSpace     fPhaseSpaceGenerator;
 
+   mutable double             fPhiMass;
+   mutable double             fChiMass;
+
    const NuclearModelI * fNuclModel;
 };
 
